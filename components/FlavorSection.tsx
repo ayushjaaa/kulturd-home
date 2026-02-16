@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FLAVORS } from '../constants';
 import { Flavor } from '../types';
+import { ConnectingLine } from './ConnectingLine';
 
 interface FlavorSectionProps {
   onAddToCart: () => void;
@@ -11,7 +12,8 @@ interface FlavorSectionProps {
 export const FlavorSection: React.FC<FlavorSectionProps> = ({ onAddToCart }) => {
   return (
     <section id="flavors" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-cream">
-      <div className="max-w-7xl mx-auto">
+      <ConnectingLine />
+      <div className="max-w-7xl mx-auto relative" style={{ zIndex: 1 }}>
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
