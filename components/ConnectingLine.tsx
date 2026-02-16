@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 export const ConnectingLine: React.FC = () => {
   const pathRef = useRef<SVGPathElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!pathRef.current || !svgRef.current) return;
@@ -26,9 +27,9 @@ export const ConnectingLine: React.FC = () => {
       ease: 'none',
       scrollTrigger: {
         trigger: '#flavors',
-        start: 'top center',
-        end: 'bottom bottom',
-        scrub: 1,
+        start: 'top 90%',
+        end: 'bottom 10%',
+        scrub: 0.5,
       },
     });
 
@@ -38,24 +39,25 @@ export const ConnectingLine: React.FC = () => {
   }, []);
 
   return (
-    <svg
-      ref={svgRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 1440 2200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid slice"
-      style={{ zIndex: 0 }}
-    >
-      <path
-        ref={pathRef}
-        d="M 200 350 Q 280 420 350 380 Q 420 340 500 420 Q 580 500 720 580 Q 860 660 920 720 Q 980 780 1000 900 Q 1020 1020 900 1120 Q 780 1220 600 1280 Q 420 1340 320 1450 Q 220 1560 280 1680 Q 340 1800 500 1880 Q 660 1960 850 1920 Q 1040 1880 1150 1850 Q 1260 1820 1350 1900"
-        stroke="#FF6B35"
-        strokeWidth="4"
+    <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+      <svg
+        ref={svgRef}
+        className="w-full h-full"
+        viewBox="0 0 1200 1600"
         fill="none"
-        opacity="0.5"
-        strokeLinecap="round"
-      />
-    </svg>
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <path
+          ref={pathRef}
+          d="M 150 200 C 200 250, 250 280, 280 250 C 310 220, 350 230, 380 270 C 410 310, 480 380, 550 420 C 620 460, 680 490, 720 540 C 760 590, 780 650, 770 720 C 760 790, 720 850, 650 900 C 580 950, 480 980, 400 1020 C 320 1060, 260 1120, 240 1200 C 220 1280, 240 1350, 300 1400 C 360 1450, 450 1480, 560 1470 C 670 1460, 780 1440, 880 1450 C 980 1460, 1050 1480, 1100 1500"
+          stroke="#FF6B35"
+          strokeWidth="5"
+          fill="none"
+          opacity="0.6"
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
   );
 };
