@@ -20,7 +20,7 @@ export const FlavorSection: React.FC<FlavorSectionProps> = ({ onAddToCart }) => 
           viewport={{ once: true }}
           className="mb-24"
         >
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none mb-6 md:mb-8">
+          <h2 className="flavor-heading font-serif text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none mb-6 md:mb-8">
             Explore <br/>
             <span className="text-accentOrange italic">the Soul.</span>
           </h2>
@@ -29,7 +29,7 @@ export const FlavorSection: React.FC<FlavorSectionProps> = ({ onAddToCart }) => 
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-end">
+        <div className="flavor-grid grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-end">
           {FLAVORS.map((flavor, index) => (
             <FlavorCard 
               key={flavor.id} 
@@ -65,7 +65,7 @@ const FlavorCard: React.FC<{ flavor: Flavor; index: number; onAddToCart: () => v
     >
       <div className={`absolute inset-0 ${flavor.bgColor} fluid-shape -z-10 transform transition-transform duration-700 group-hover:scale-110 ${flavor.rotate || ''}`} />
 
-      <div className="w-full relative px-10 md:px-12 mb-8">
+      <div className="flavor-card-inner w-full relative px-10 md:px-12 mb-8">
         {/* Polaroid-style frame */}
         <div className="bg-white border-8 border-white p-3 pb-16 shadow-2xl transform group-hover:-translate-y-4 transition-transform duration-500 rotate-2 group-hover:rotate-0 relative">
           <video

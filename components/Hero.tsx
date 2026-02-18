@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
 
       {/* Brand Title */}
       <h1
-        className="font-serif-brand font-black leading-none tracking-tight mb-2 md:mb-4 select-none"
+        className="hero-title font-serif-brand font-black leading-none tracking-tight mb-2 md:mb-4 select-none"
         style={{ fontSize: 'clamp(120px, 14vw, 210px)' }}
         aria-label="KULTURD"
       >
@@ -90,10 +90,10 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Product Showcase & Info Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl">
+      <div className="hero-grid grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl">
 
         {/* Left: Product Bottle & Visuals */}
-        <div className="relative flex justify-center items-center" style={{ height: 'clamp(420px, 55vw, 700px)' }}>
+        <div className="hero-bottle-container relative flex justify-center items-center" style={{ height: 'clamp(420px, 55vw, 700px)' }}>
 
           {/* Blob Ring — stroke traces itself, fill appears after */}
           <svg
@@ -163,7 +163,7 @@ const Hero: React.FC = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-4 justify-center lg:justify-start mt-2">
+          <div className="hero-cta-row flex items-center gap-4 justify-center lg:justify-start mt-2">
             <div>
               <p className="text-xs text-[#1b3a2a]/50 uppercase tracking-widest font-medium">Starting from</p>
               <p className="text-2xl md:text-3xl font-black text-[#1b3a2a]">₹299</p>

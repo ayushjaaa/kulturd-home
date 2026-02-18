@@ -4,9 +4,9 @@ import { Instagram, Twitter, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-forest text-cream pt-14 md:pt-18 lg:pt-24 pb-10 md:pb-12 px-8 lg:px-16">
+    <footer className="footer-root bg-forest text-cream pt-14 md:pt-18 lg:pt-24 pb-10 md:pb-12 px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+        <div className="footer-top-row flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
           <div className="md:w-1/3">
             <div className="text-4xl font-black tracking-tighter mb-8">KULTURD.</div>
             <p className="text-cream/50 leading-relaxed mb-10 max-w-sm text-sm lg:text-base">
@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:w-2/3 grid grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="footer-links-grid md:w-2/3 grid grid-cols-2 lg:grid-cols-3 gap-12">
             <FooterLinkGroup 
               title="Shop" 
               links={['Variety Packs', 'Sub & Save', 'Wholesale']} 

@@ -8,6 +8,10 @@ import { FlavorSection } from './components/FlavorSection';
 import { SocialProof } from './components/SocialProof';
 import { Footer } from './components/Footer';
 import Marquee from './components/Marquee';
+import { ShopPage } from './components/ShopPage';
+import CartDrawer from './components/CartDrawer';
+import CheckoutPage from './components/CheckoutPage';
+import { CartItem, Product, PackSize } from './types';
 
 const ShimmerLoader: React.FC<{ visible: boolean }> = ({ visible }) => (
   <div
@@ -162,29 +166,77 @@ const ShimmerLoader: React.FC<{ visible: boolean }> = ({ visible }) => (
 );
 
 const App: React.FC = () => {
-  const [, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showShop, setShowShop] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // Wait for page + GLB model to fully load
     const done = () => setLoading(false);
     if (document.readyState === 'complete') {
-      // Give Three.js canvas a moment to paint
       const t = setTimeout(done, 800);
       return () => clearTimeout(t);
     }
     window.addEventListener('load', () => setTimeout(done, 800), { once: true });
   }, []);
 
-  const handleAddToCart = () => {
-    setCartCount(prev => prev + 1);
+  const handleAddToCart = (product: Product, size: PackSize) => {
+    setCart(prev => {
+      const key = `${product.id}-${size}`;
+      const existing = prev.find(i => i.id === key);
+      if (existing) {
+        return prev.map(i => i.id === key ? { ...i, quantity: i.quantity + 1 } : i);
+      }
+      return [...prev, { id: key, product, size, quantity: 1 }];
+    });
+    setCartOpen(true);
   };
+
+  const handleUpdateQuantity = (id: string, delta: number) => {
+    setCart(prev =>
+      prev
+        .map(i => i.id === id ? { ...i, quantity: i.quantity + delta } : i)
+        .filter(i => i.quantity > 0)
+    );
+  };
+
+  const subtotal = cart.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+
+  if (showCheckout) {
+    return (
+      <CheckoutPage
+        cart={cart}
+        subtotal={subtotal}
+        onBack={() => setShowCheckout(false)}
+      />
+    );
+  }
+
+  if (showShop) {
+    return (
+      <>
+        <ShopPage
+          onClose={() => setShowShop(false)}
+          onAddToCart={handleAddToCart}
+        />
+        <CartDrawer
+          isOpen={cartOpen}
+          onClose={() => setCartOpen(false)}
+          cart={cart}
+          subtotal={subtotal}
+          onUpdateQuantity={handleUpdateQuantity}
+          onCheckout={() => { setCartOpen(false); setShowCheckout(true); }}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen">
       <ShimmerLoader visible={loading} />
       <section id="header" className="container mx-auto px-6 md:px-12">
-        <Navbar />
+        <Navbar onShopAll={() => setShowShop(true)} />
         <Hero />
       </section>
       <Marquee />
@@ -196,7 +248,7 @@ const App: React.FC = () => {
           <ScrollingBanner />
         </section>
         <section id="flavors">
-          <FlavorSection onAddToCart={handleAddToCart} />
+          <FlavorSection onAddToCart={() => setShowShop(true)} />
         </section>
         <section id="social-proof">
           <SocialProof />

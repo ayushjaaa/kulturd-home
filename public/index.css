@@ -1,3 +1,266 @@
+/* ── Mobile-only overrides (≤767px) — zero effect on laptop/desktop ── */
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+
+  /* ── Hero: gap between CTA row and Marquee below ── */
+  .hero-cta-row {
+    margin-bottom: 32px !important;
+  }
+
+  /* ── Hero: title font size ── */
+  .hero-title {
+    font-size: clamp(60px, 18vw, 100px) !important;
+  }
+
+  /* ── Hero: bottle container height ── */
+  .hero-bottle-container {
+    height: 340px !important;
+  }
+
+  /* ── Hero: center blob SVG, remove desktop left-offset ── */
+  .blob-ring {
+    transform: none !important;
+    width: min(88vw, 340px) !important;
+    height: min(92vw, 360px) !important;
+  }
+
+  /* ── Hero: center bottle canvas, remove desktop rotation/offset ── */
+  .bottle-canvas-wrapper {
+    transform: none !important;
+  }
+
+  /* ── Hero: hide floating badges on mobile (they overflow) ── */
+  .badge-pop-1,
+  .badge-pop-2,
+  .badge-pop-3 {
+    display: none !important;
+  }
+
+  /* ── Footer: reduce padding and gaps ── */
+  .footer-root {
+    padding-top: 40px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .footer-top-row {
+    gap: 32px !important;
+    margin-bottom: 40px !important;
+  }
+  .footer-links-grid {
+    gap: 28px !important;
+  }
+
+  /* ── FlavorSection: reduce heading size and gap ── */
+  .flavor-heading {
+    font-size: clamp(36px, 11vw, 56px) !important;
+  }
+  .flavor-grid {
+    gap: 32px !important;
+  }
+  .flavor-card-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── Navbar: reduce vertical padding ── */
+  nav.w-full {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+
+  /* ── SocialProof: tighten gap, collage height, quote size, badge padding ── */
+  .socialproof-row {
+    gap: 32px !important;
+  }
+  .socialproof-collage {
+    height: 360px !important;
+    overflow: visible !important;
+  }
+  .socialproof-quote {
+    font-size: 1.35rem !important;
+    margin-bottom: 20px !important;
+  }
+  .socialproof-badge {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    gap: 10px !important;
+  }
+
+  /* ── ThreeDBottleShowcase: KULTURD text fits screen, badges repositioned ── */
+  .showcase-kulturd-text {
+    font-size: 28vw !important;
+  }
+  .showcase-bottle-img {
+    width: 140px !important;
+  }
+  /* Badges: sit left/right beside the bottle, vertically centered, no overflow */
+  .showcase-badges-wrapper {
+    height: 80px !important;
+    margin-top: 8px !important;
+  }
+  .showcase-badge-left {
+    left: 0 !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: 90px !important;
+  }
+  .showcase-badge-right {
+    right: 0 !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: 90px !important;
+  }
+  /* Buy Now: clear the badges, no negative margin on mobile */
+  .showcase-buynow {
+    margin-top: 16px !important;
+  }
+
+  /* ── Marquee: smaller text ── */
+  .marquee-text {
+    font-size: 1.1rem !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── ScrollingBanner: smaller text ── */
+  .scrollbanner-text {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* ── Tablet-only overrides (768px – 1023px) — zero effect on mobile or desktop ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+
+  /* ── Hero: two-column layout at tablet (bottle left, text right) ── */
+  .hero-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* ── Hero: title ── */
+  .hero-title {
+    font-size: clamp(80px, 11vw, 120px) !important;
+  }
+
+  /* ── Hero: bottle container height ── */
+  .hero-bottle-container {
+    height: clamp(380px, 48vw, 520px) !important;
+  }
+
+  /* ── Hero: blob ring ── */
+  .blob-ring {
+    width: clamp(320px, 44vw, 480px) !important;
+    height: clamp(360px, 48vw, 530px) !important;
+  }
+
+  /* ── Hero: hide floating badges on tablet (they overflow with 2-col layout) ── */
+  .badge-pop-1,
+  .badge-pop-2,
+  .badge-pop-3 {
+    display: none !important;
+  }
+
+  /* ── Navbar: ensure pills don't cramp at 768px ── */
+  nav.w-full {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  /* ── Footer: 3-column links grid at tablet ── */
+  .footer-root {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+  .footer-top-row {
+    gap: 40px !important;
+    margin-bottom: 48px !important;
+  }
+  .footer-links-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  /* ── FlavorSection: moderate heading and gap ── */
+  .flavor-heading {
+    font-size: clamp(44px, 7vw, 68px) !important;
+  }
+  .flavor-grid {
+    gap: 20px !important;
+  }
+  .flavor-card-inner {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* ── SocialProof: side-by-side at tablet, collage sized correctly ── */
+  .socialproof-row {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 32px !important;
+  }
+  .socialproof-collage {
+    height: 400px !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+    width: 45% !important;
+    max-width: none !important;
+  }
+  .socialproof-quote {
+    font-size: clamp(1.4rem, 2.5vw, 2rem) !important;
+    margin-bottom: 16px !important;
+  }
+  .socialproof-badge {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    gap: 12px !important;
+  }
+
+  /* ── ThreeDBottleShowcase: KULTURD text and bottle sized for tablet ── */
+  .showcase-kulturd-text {
+    font-size: 21vw !important;
+  }
+  .showcase-bottle-img {
+    width: clamp(160px, 20vw, 220px) !important;
+  }
+  /* Badges: keep visible, pull in from extreme offsets ── */
+  .showcase-badges-wrapper {
+    height: 90px !important;
+    margin-top: 12px !important;
+  }
+  .showcase-badge-left {
+    left: 4px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: clamp(100px, 12vw, 130px) !important;
+  }
+  .showcase-badge-right {
+    right: 4px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: clamp(100px, 12vw, 130px) !important;
+  }
+  .showcase-buynow {
+    margin-top: 20px !important;
+  }
+
+  /* ── Marquee: moderate text size ── */
+  .marquee-text {
+    font-size: 1.4rem !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* ── ScrollingBanner: moderate text size ── */
+  .scrollbanner-text {
+    font-size: 1.4rem !important;
+  }
+}
+
 /* Glassmorphism utility */
 .glass {
   background: rgba(255, 255, 255, 0.55);

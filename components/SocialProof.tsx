@@ -7,9 +7,9 @@ export const SocialProof: React.FC = () => {
   return (
     <section className="py-16 md:py-24 lg:py-28 xl:py-32 bg-[#E9E4D6] relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col lg:flex-row items-center gap-20">
+        <div className="socialproof-row flex flex-col lg:flex-row items-center gap-20">
           {/* Polaroid Collage */}
-          <div className="lg:w-1/2 relative h-[380px] md:h-[480px] lg:h-[560px] xl:h-[650px] w-full max-w-lg">
+          <div className="socialproof-collage lg:w-1/2 relative h-[380px] md:h-[480px] lg:h-[560px] xl:h-[650px] w-full max-w-lg">
             <motion.div 
               initial={{ rotate: -10, opacity: 0, x: -50 }}
               whileInView={{ rotate: -3, opacity: 1, x: 0 }}
@@ -55,7 +55,7 @@ export const SocialProof: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-8 md:mb-10"
+              className="socialproof-quote font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-8 md:mb-10"
             >
               "The most refreshing, complex kombucha I've ever tasted. It's not just a drink, it's a daily ritual for my gut and my sanity."
             </motion.blockquote>
@@ -63,7 +63,7 @@ export const SocialProof: React.FC = () => {
             <div className="flex flex-col gap-6">
               <p className="font-bold text-xl">— Sarah J., Wellness Coach</p>
               
-              <div className="inline-flex items-center self-start gap-4 bg-forest text-cream px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] uppercase">
+              <div className="socialproof-badge inline-flex items-center self-start gap-4 bg-forest text-cream px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] uppercase">
                 <span>4.9/5 Rating</span>
                 <span className="w-1.5 h-1.5 bg-peach rounded-full"></span>
                 <span>3,000+ Happy Humans</span>

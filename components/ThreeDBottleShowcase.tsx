@@ -133,7 +133,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
         {/* Background KULTURD text — outline version (always visible) */}
         <h1
           ref={kulturdOutlineRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
+          className="showcase-kulturd-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
           style={{
             WebkitTextStroke: '1px rgba(45, 74, 62, 0.25)',
             color: 'transparent',
@@ -147,7 +147,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
         {/* Background KULTURD text — filled version revealed by clip-path from bottom */}
         <h1
           ref={kulturdFilledRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
+          className="showcase-kulturd-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
           style={{
             color: '#2D4A3E',
             zIndex: 2,
@@ -161,7 +161,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
 
         {/* Product images — stacked, crossfade */}
         <div className="relative flex flex-col items-center" style={{ zIndex: 20 }}>
-          <div className="relative w-48 md:w-64 lg:w-72 xl:w-80" style={{ aspectRatio: '1/1.6' }}>
+          <div className="showcase-bottle-img relative w-48 md:w-64 lg:w-72 xl:w-80" style={{ aspectRatio: '1/1.6' }}>
             {IMAGES.map((src, i) => (
               <img
                 key={src}
@@ -180,18 +180,18 @@ export const ThreeDBottleShowcase: React.FC = () => {
           </div>
 
           {/* Glassmorphic badges */}
-          <div className="relative w-full mt-10">
-            <div className="absolute -left-20 md:-left-28 lg:-left-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform -rotate-6">
+          <div className="showcase-badges-wrapper relative w-full mt-10">
+            <div className="showcase-badge-left absolute -left-20 md:-left-28 lg:-left-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform -rotate-6">
               <p ref={badgeLeftLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].left.label}</p>
               <p ref={badgeLeftTextRef} className="font-serif text-xs md:text-base lg:text-lg leading-tight">{FLAVOR_BADGES[0].left.text}</p>
             </div>
-            <div className="absolute -right-20 md:-right-28 lg:-right-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform rotate-6">
+            <div className="showcase-badge-right absolute -right-20 md:-right-28 lg:-right-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform rotate-6">
               <p ref={badgeRightLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].right.label}</p>
               <p ref={badgeRightTextRef} className="font-serif text-xs md:text-base lg:text-lg leading-tight">{FLAVOR_BADGES[0].right.text}</p>
             </div>
           </div>
 
-          <div className="-mt-8 text-center" style={{ position: 'relative', zIndex: 30 }}>
+          <div className="showcase-buynow -mt-8 text-center" style={{ position: 'relative', zIndex: 30 }}>
             <p className="uppercase tracking-[0.4em] text-[10px] md:text-xs font-black mb-6 opacity-80 text-forest">
               Gut Health, Redefined.
             </p>

@@ -21,7 +21,7 @@ const MarqueeTrack: React.FC<{ reverse?: boolean }> = ({ reverse }) => (
     {[...Array(4)].map((_, copyIdx) =>
       ITEMS.map((item, i) => (
         <span key={`${copyIdx}-${i}`} className="flex items-center">
-          <span className="px-6 md:px-8 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tighter font-serif-brand text-[#f5f0e8]">
+          <span className="marquee-text px-6 md:px-8 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tighter font-serif-brand text-[#f5f0e8]">
             {item}
           </span>
           <svg

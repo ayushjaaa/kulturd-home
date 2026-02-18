@@ -36,7 +36,7 @@ export const ScrollingBanner: React.FC<ScrollingBannerProps> = ({
           transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap h-full items-center"
         >
-          <div className={`flex items-start ${textColor} text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${font} font-black uppercase tracking-tighter h-full`}>
+          <div className={`scrollbanner-text flex items-start ${textColor} text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${font} font-black uppercase tracking-tighter h-full`}>
             {items.map((item, index) => (
               <React.Fragment key={index}>
                 <span className="mx-8">{item}</span>
