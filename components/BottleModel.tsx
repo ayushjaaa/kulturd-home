@@ -1,17 +1,30 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
+// Shared mouse state outside component so both Canvas and wrapper share the same ref
+const mouse = { x: 0, y: 0 };
+
 const Bottle: React.FC = () => {
   const ref = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/textured_model_0.glb');
+  const autoY = useRef(0);
+  const smoothX = useRef(0);
+  const smoothMouseY = useRef(0);
 
-  useFrame((state) => {
+  useFrame((_, delta) => {
     if (ref.current) {
-      const t = state.clock.getElapsedTime();
-      ref.current.rotation.y = t * 0.4;
+      // Auto-rotate continuously
+      autoY.current += delta * 0.4;
+
+      // Smooth mouse offsets independently
+      smoothMouseY.current += (mouse.x * Math.PI * 0.6 - smoothMouseY.current) * 0.08;
+      smoothX.current += (mouse.y * Math.PI * 0.25 - smoothX.current) * 0.08;
+
+      ref.current.rotation.y = autoY.current + smoothMouseY.current;
+      ref.current.rotation.x = smoothX.current;
     }
   });
 
@@ -19,6 +32,16 @@ const Bottle: React.FC = () => {
 };
 
 const BottleModel: React.FC = () => {
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Normalize to -1 → +1 range relative to viewport center
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <div className="bottle-canvas-wrapper" style={{ width: '100%', height: '700px', transform: 'rotate(20deg) translate3d(-150px, -9px, 0px)' }}>
       <Canvas

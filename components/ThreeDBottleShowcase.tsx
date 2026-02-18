@@ -1,79 +1,198 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const IMAGES = [
+  'https://kulturd.co/wp-content/uploads/2025/09/mango-coconut-lifestyle.png',
+  'https://kulturd.co/wp-content/uploads/2021/03/New-variety-pack_02.png',
+  'https://kulturd.co/wp-content/uploads/2022/03/4a.jpg',
+  'https://kulturd.co/wp-content/uploads/2022/03/Apple-Cinnamon-Kombucha.png',
+];
+
+// Color stops for each image (liquid fill color)
+const FILL_COLORS = ['#FFAB91', '#F4A261', '#E76F51', '#A8C686'];
+
+// Per-flavor badge content
+const FLAVOR_BADGES = [
+  { left: { label: 'Origin', text: 'Mango & Coconut' },    right: { label: 'Taste', text: 'Tropical Bliss' } },
+  { left: { label: 'Variety', text: 'Mixed Pack' },         right: { label: 'Benefit', text: 'Gut Friendly' } },
+  { left: { label: 'Purity', text: '100% Natural' },        right: { label: 'Brewing', text: 'Small Batch' } },
+  { left: { label: 'Spice', text: 'Apple Cinnamon' },       right: { label: 'Season', text: 'Autumn Warmth' } },
+];
 
 export const ThreeDBottleShowcase: React.FC = () => {
-  return (
-    <section className="relative min-h-[110vh] md:min-h-screen flex items-center justify-center pt-24 pb-32 overflow-hidden bg-cream">
-      {/* Background Text */}
-      <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black text-outline select-none pointer-events-none z-0 opacity-40">
-        KULTURD
-      </h1>
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const kulturdOutlineRef = useRef<HTMLHeadingElement>(null);
+  const kulturdFilledRef = useRef<HTMLHeadingElement>(null);
+  const badgeLeftLabelRef = useRef<HTMLParagraphElement>(null);
+  const badgeLeftTextRef = useRef<HTMLParagraphElement>(null);
+  const badgeRightLabelRef = useRef<HTMLParagraphElement>(null);
+  const badgeRightTextRef = useRef<HTMLParagraphElement>(null);
 
-      <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
-        {/* Animated Blob */}
-        <motion.div 
-          animate={{
-            scale: [1, 1.15, 1],
-            rotate: [0, 15, 0],
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const section = sectionRef.current;
+    const fill = fillRef.current;
+    if (!wrapper || !section || !fill) return;
+
+    // Total scroll distance = 4 images worth of scroll
+    const scrollLength = window.innerHeight * 4;
+
+    // Pin the sticky section inside wrapper
+    const ctx = gsap.context(() => {
+      // Master timeline driven by scroll
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapper,
+          start: 'top top',
+          end: `+=${scrollLength}`,
+          scrub: 1,
+          pin: section,
+          anticipatePin: 1,
+        },
+      });
+
+      // Animate fill height from 0% -> 100%
+      tl.fromTo(
+        fill,
+        { height: '0%' },
+        { height: '100%', ease: 'none', duration: 4 }
+      );
+
+      // Cycle through images + update badges at 0%, 25%, 50%, 75% progress
+      IMAGES.forEach((_, i) => {
+        const startProgress = i / IMAGES.length;
+        tl.call(
+          () => {
+            imgRefs.current.forEach((img, j) => {
+              if (!img) return;
+              img.style.opacity = j === i ? '1' : '0';
+            });
+            const badge = FLAVOR_BADGES[i];
+            if (badgeLeftLabelRef.current) badgeLeftLabelRef.current.textContent = badge.left.label;
+            if (badgeLeftTextRef.current) badgeLeftTextRef.current.textContent = badge.left.text;
+            if (badgeRightLabelRef.current) badgeRightLabelRef.current.textContent = badge.right.label;
+            if (badgeRightTextRef.current) badgeRightTextRef.current.textContent = badge.right.text;
+          },
+          [],
+          startProgress * 4
+        );
+      });
+
+      // Animate fill color through stages
+      FILL_COLORS.forEach((color, i) => {
+        tl.to(fill, { backgroundColor: color, duration: 0, ease: 'none' }, (i / IMAGES.length) * 4);
+      });
+
+      // Reveal the filled KULTURD text as fill rises
+      if (kulturdFilledRef.current && kulturdOutlineRef.current) {
+        tl.fromTo(
+          kulturdFilledRef.current,
+          { clipPath: 'inset(100% 0% 0% 0%)' },
+          { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: 4 },
+          0
+        );
+      }
+    }, wrapper);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={wrapperRef} style={{ height: `${window.innerHeight * 5}px` }}>
+      <section
+        ref={sectionRef}
+        className="relative min-h-[110vh] md:min-h-screen flex items-center justify-center pt-16 pb-4 overflow-hidden bg-cream"
+        style={{ willChange: 'transform' }}
+      >
+        {/* Liquid fill layer rising from bottom */}
+        <div
+          ref={fillRef}
+          className="absolute bottom-0 left-0 w-full"
+          style={{
+            height: '0%',
+            backgroundColor: '#FFAB91',
+            zIndex: 0,
+            transition: 'background-color 0.4s ease',
           }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute w-[280px] h-[280px] md:w-[600px] md:h-[600px] bg-gradient-to-br from-peach/40 to-transparent fluid-shape blur-3xl -z-10"
         />
 
-        {/* Hero Product */}
-        <motion.div 
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="relative w-56 md:w-80 lg:w-[380px]"
+        {/* Background KULTURD text — outline version (always visible) */}
+        <h1
+          ref={kulturdOutlineRef}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
+          style={{
+            WebkitTextStroke: '1px rgba(45, 74, 62, 0.25)',
+            color: 'transparent',
+            zIndex: 1,
+            whiteSpace: 'nowrap',
+          }}
         >
-          <motion.img 
-            animate={{ y: [-15, 15, -15] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            alt="Kulturd Peach Kombucha" 
-            className="w-full drop-shadow-[0_45px_45px_rgba(0,0,0,0.2)]"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAf5jdiMFReqQWs0-_I0NzGpjInncjjZevloWrXHgqlx7972vuHRWeK1q9PDl6qFV-futSeIUFjh6F_oDzQrkHsE52ulLyUmsi-GwLpiIXqXtzoR0xYHd2Xhy4hsadbj-xijvlKV6mys8FwkQUMk_LvEAY2wrHdkEcf6bG2Mmhm--XRK_H_YBXvie7t-nSdNwUKIPET8xja65zS0T9TDAJAT0BzcWfbRA1bV2O2Q6eXp-vXqR3FlRJSwMZJUNS-omoloACgJCBBBE" 
-          />
+          KULTURD
+        </h1>
 
-          {/* Glassmorphic Cards */}
-          <motion.div 
-            initial={{ x: -30, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="absolute -left-10 md:-left-20 top-1/4 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform -rotate-6 z-20"
-          >
-            <p className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">Purity</p>
-            <p className="font-serif text-xs md:text-lg leading-tight">100% Natural Ingredients</p>
-          </motion.div>
+        {/* Background KULTURD text — filled version revealed by clip-path from bottom */}
+        <h1
+          ref={kulturdFilledRef}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-serif font-black select-none pointer-events-none"
+          style={{
+            color: '#2D4A3E',
+            zIndex: 2,
+            clipPath: 'inset(100% 0% 0% 0%)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          KULTURD
+        </h1>
 
-          <motion.div 
-            initial={{ x: 30, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="absolute -right-10 md:-right-20 bottom-1/4 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform rotate-6 z-20"
-          >
-            <p className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">Wellness</p>
-            <p className="font-serif text-xs md:text-lg leading-tight">Zero Added Sugar</p>
-          </motion.div>
-        </motion.div>
+        {/* Product images — stacked, crossfade */}
+        <div className="relative flex flex-col items-center" style={{ zIndex: 20 }}>
+          <div className="relative w-56 md:w-80 lg:w-[340px]" style={{ aspectRatio: '1/1.6' }}>
+            {IMAGES.map((src, i) => (
+              <img
+                key={src}
+                ref={(el) => { imgRefs.current[i] = el; }}
+                src={src}
+                alt={`Kulturd Kombucha flavor ${i + 1}`}
+                className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_45px_45px_rgba(0,0,0,0.2)]"
+                style={{
+                  opacity: i === 0 ? 1 : 0,
+                  transition: 'opacity 0.5s ease',
+                }}
+              />
+            ))}
+          </div>
 
-        <div className="mt-12 md:mt-16 text-center max-w-2xl relative z-30">
-          <p className="uppercase tracking-[0.4em] text-[10px] md:text-xs font-black mb-6 opacity-80 text-forest">
-            Gut Health, Redefined.
-          </p>
-          <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: '#1e332a' }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-forest text-cream px-12 py-5 rounded-full font-black text-base md:text-lg tracking-widest shadow-2xl transition-all cursor-pointer"
-          >
-            BUY NOW
-          </motion.button>
+          {/* Glassmorphic badges */}
+          <div className="relative w-full mt-10">
+            <div className="absolute -left-24 md:-left-40 -top-32 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform -rotate-6">
+              <p ref={badgeLeftLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].left.label}</p>
+              <p ref={badgeLeftTextRef} className="font-serif text-xs md:text-lg leading-tight">{FLAVOR_BADGES[0].left.text}</p>
+            </div>
+            <div className="absolute -right-24 md:-right-40 -top-32 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform rotate-6">
+              <p ref={badgeRightLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].right.label}</p>
+              <p ref={badgeRightTextRef} className="font-serif text-xs md:text-lg leading-tight">{FLAVOR_BADGES[0].right.text}</p>
+            </div>
+          </div>
+
+          <div className="-mt-8 text-center" style={{ position: 'relative', zIndex: 30 }}>
+            <p className="uppercase tracking-[0.4em] text-[10px] md:text-xs font-black mb-6 opacity-80 text-forest">
+              Gut Health, Redefined.
+            </p>
+            <button
+              className="bg-forest text-cream px-12 py-5 rounded-full font-black text-base md:text-lg tracking-widest shadow-2xl transition-all cursor-pointer hover:bg-opacity-90"
+            >
+              BUY NOW
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };

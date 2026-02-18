@@ -7,9 +7,10 @@ import { ScrollingBanner } from './components/ScrollingBanner';
 import { FlavorSection } from './components/FlavorSection';
 import { SocialProof } from './components/SocialProof';
 import { Footer } from './components/Footer';
+import Marquee from './components/Marquee';
 
 const App: React.FC = () => {
-  const [cartCount, setCartCount] = useState(0);
+  const [, setCartCount] = useState(0);
 
   const handleAddToCart = () => {
     setCartCount(prev => prev + 1);
@@ -17,17 +18,28 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-6 md:px-12">
+      <section id="header" className="container mx-auto px-6 md:px-12">
         <Navbar />
         <Hero />
-      </div>
+      </section>
+      <Marquee />
       <main>
-        <ThreeDBottleShowcase />
-        <ScrollingBanner />
-        <FlavorSection onAddToCart={handleAddToCart} />
-        <SocialProof />
+        <section id="bottle-showcase">
+          <ThreeDBottleShowcase />
+        </section>
+        <section id="scrolling-banner">
+          <ScrollingBanner />
+        </section>
+        <section id="flavors">
+          <FlavorSection onAddToCart={handleAddToCart} />
+        </section>
+        <section id="social-proof">
+          <SocialProof />
+        </section>
       </main>
-      <Footer />
+      <section id="footer">
+        <Footer />
+      </section>
     </div>
   );
 };
