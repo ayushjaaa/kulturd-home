@@ -4,7 +4,7 @@ import { Instagram, Twitter, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-forest text-cream pt-24 pb-12 px-8 lg:px-16">
+    <footer className="bg-forest text-cream pt-14 md:pt-18 lg:pt-24 pb-10 md:pb-12 px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
           <div className="md:w-1/3">

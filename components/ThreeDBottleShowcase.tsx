@@ -34,6 +34,13 @@ export const ThreeDBottleShowcase: React.FC = () => {
   const badgeLeftTextRef = useRef<HTMLParagraphElement>(null);
   const badgeRightLabelRef = useRef<HTMLParagraphElement>(null);
   const badgeRightTextRef = useRef<HTMLParagraphElement>(null);
+  const [wrapperHeight, setWrapperHeight] = React.useState(() => window.innerHeight * 5);
+
+  useEffect(() => {
+    const updateHeight = () => setWrapperHeight(window.innerHeight * 5);
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -52,7 +59,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
           trigger: wrapper,
           start: 'top top',
           end: `+=${scrollLength}`,
-          scrub: 1,
+          scrub: 0.4,
           pin: section,
           anticipatePin: 1,
         },
@@ -90,12 +97,12 @@ export const ThreeDBottleShowcase: React.FC = () => {
         tl.to(fill, { backgroundColor: color, duration: 0, ease: 'none' }, (i / IMAGES.length) * 4);
       });
 
-      // Reveal the filled KULTURD text as fill rises
-      if (kulturdFilledRef.current && kulturdOutlineRef.current) {
+      // Sync the filled text reveal to the fill div height via CSS var — zero per-frame JS on the text
+      if (kulturdFilledRef.current && section) {
         tl.fromTo(
-          kulturdFilledRef.current,
-          { clipPath: 'inset(100% 0% 0% 0%)' },
-          { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: 4 },
+          section,
+          { '--fill-pct': '100%' },
+          { '--fill-pct': '0%', ease: 'none', duration: 4 },
           0
         );
       }
@@ -105,11 +112,11 @@ export const ThreeDBottleShowcase: React.FC = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} style={{ height: `${window.innerHeight * 5}px` }}>
+    <div ref={wrapperRef} style={{ height: `${wrapperHeight}px` }}>
       <section
         ref={sectionRef}
         className="relative min-h-[110vh] md:min-h-screen flex items-center justify-center pt-16 pb-4 overflow-hidden bg-cream"
-        style={{ willChange: 'transform' }}
+        style={{ '--fill-pct': '100%' } as React.CSSProperties}
       >
         {/* Liquid fill layer rising from bottom */}
         <div
@@ -119,7 +126,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
             height: '0%',
             backgroundColor: '#FFAB91',
             zIndex: 0,
-            transition: 'background-color 0.4s ease',
+            willChange: 'height, background-color',
           }}
         />
 
@@ -144,8 +151,9 @@ export const ThreeDBottleShowcase: React.FC = () => {
           style={{
             color: '#2D4A3E',
             zIndex: 2,
-            clipPath: 'inset(100% 0% 0% 0%)',
+            clipPath: 'inset(var(--fill-pct) 0% 0% 0%)',
             whiteSpace: 'nowrap',
+            willChange: 'clip-path',
           }}
         >
           KULTURD
@@ -153,7 +161,7 @@ export const ThreeDBottleShowcase: React.FC = () => {
 
         {/* Product images — stacked, crossfade */}
         <div className="relative flex flex-col items-center" style={{ zIndex: 20 }}>
-          <div className="relative w-56 md:w-80 lg:w-[340px]" style={{ aspectRatio: '1/1.6' }}>
+          <div className="relative w-48 md:w-64 lg:w-72 xl:w-80" style={{ aspectRatio: '1/1.6' }}>
             {IMAGES.map((src, i) => (
               <img
                 key={src}
@@ -161,6 +169,8 @@ export const ThreeDBottleShowcase: React.FC = () => {
                 src={src}
                 alt={`Kulturd Kombucha flavor ${i + 1}`}
                 className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_45px_45px_rgba(0,0,0,0.2)]"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
                 style={{
                   opacity: i === 0 ? 1 : 0,
                   transition: 'opacity 0.5s ease',
@@ -171,13 +181,13 @@ export const ThreeDBottleShowcase: React.FC = () => {
 
           {/* Glassmorphic badges */}
           <div className="relative w-full mt-10">
-            <div className="absolute -left-24 md:-left-40 -top-32 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform -rotate-6">
+            <div className="absolute -left-20 md:-left-28 lg:-left-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform -rotate-6">
               <p ref={badgeLeftLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].left.label}</p>
-              <p ref={badgeLeftTextRef} className="font-serif text-xs md:text-lg leading-tight">{FLAVOR_BADGES[0].left.text}</p>
+              <p ref={badgeLeftTextRef} className="font-serif text-xs md:text-base lg:text-lg leading-tight">{FLAVOR_BADGES[0].left.text}</p>
             </div>
-            <div className="absolute -right-24 md:-right-40 -top-32 p-3 md:p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl w-32 md:w-44 transform rotate-6">
+            <div className="absolute -right-20 md:-right-28 lg:-right-36 -top-28 md:-top-32 p-3 md:p-4 rounded-2xl bg-white/40 border border-white/20 shadow-xl w-28 md:w-36 lg:w-44 transform rotate-6">
               <p ref={badgeRightLabelRef} className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-accentOrange mb-1">{FLAVOR_BADGES[0].right.label}</p>
-              <p ref={badgeRightTextRef} className="font-serif text-xs md:text-lg leading-tight">{FLAVOR_BADGES[0].right.text}</p>
+              <p ref={badgeRightTextRef} className="font-serif text-xs md:text-base lg:text-lg leading-tight">{FLAVOR_BADGES[0].right.text}</p>
             </div>
           </div>
 

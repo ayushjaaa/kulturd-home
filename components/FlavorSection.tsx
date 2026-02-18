@@ -11,7 +11,7 @@ interface FlavorSectionProps {
 
 export const FlavorSection: React.FC<FlavorSectionProps> = ({ onAddToCart }) => {
   return (
-    <section id="flavors" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-cream">
+    <section id="flavors" className="py-16 md:py-24 lg:py-32 xl:py-40 px-6 md:px-12 relative overflow-hidden bg-cream">
       <ConnectingLine />
       <div className="max-w-7xl mx-auto relative" style={{ zIndex: 1 }}>
         <motion.div 
@@ -20,11 +20,11 @@ export const FlavorSection: React.FC<FlavorSectionProps> = ({ onAddToCart }) => 
           viewport={{ once: true }}
           className="mb-24"
         >
-          <h2 className="font-serif text-6xl md:text-9xl font-black leading-none mb-8">
+          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none mb-6 md:mb-8">
             Explore <br/>
             <span className="text-accentOrange italic">the Soul.</span>
           </h2>
-          <p className="max-w-md text-lg md:text-xl leading-relaxed opacity-60">
+          <p className="max-w-md text-base md:text-lg lg:text-xl leading-relaxed opacity-60">
             Discover our meticulously crafted botanical blends, each designed to energize your body and soul.
           </p>
         </motion.div>
@@ -75,6 +75,7 @@ const FlavorCard: React.FC<{ flavor: Flavor; index: number; onAddToCart: () => v
             loop
             muted
             playsInline
+            preload="none"
           >
             <source src={flavor.image} type="video/mp4" />
           </video>

@@ -1,0 +1,12 @@
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Fluid font size helpers — used across the site */
+:root {
+  --title-size: clamp(100px, 14vw, 200px);
+}

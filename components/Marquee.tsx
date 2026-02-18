@@ -14,18 +14,19 @@ const MarqueeTrack: React.FC<{ reverse?: boolean }> = ({ reverse }) => (
     className="flex whitespace-nowrap"
     style={{
       animation: `marquee-scroll${reverse ? '-reverse' : ''} 30s linear infinite`,
+      willChange: 'transform',
     }}
   >
     {/* Render 4 copies so there's always content filling the viewport */}
     {[...Array(4)].map((_, copyIdx) =>
       ITEMS.map((item, i) => (
         <span key={`${copyIdx}-${i}`} className="flex items-center">
-          <span className="px-8 text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter font-serif-brand text-[#f5f0e8]">
+          <span className="px-6 md:px-8 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tighter font-serif-brand text-[#f5f0e8]">
             {item}
           </span>
           <svg
-            className="mx-4 shrink-0"
-            width="28" height="32" viewBox="0 0 28 32" fill="none"
+            className="mx-3 md:mx-4 shrink-0 w-5 h-6 md:w-6 md:h-7 lg:w-7 lg:h-8"
+            viewBox="0 0 28 32" fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
@@ -58,7 +59,7 @@ const Marquee: React.FC = () => {
 
       <section
         id="marquee"
-        className="relative z-10 overflow-hidden py-5"
+        className="relative z-10 overflow-hidden py-3 md:py-4 lg:py-5"
         style={{ background: '#1b3a2a', transform: 'skewY(-1.5deg)', marginTop: '-0.4rem', marginBottom: '2rem' }}
       >
         <div style={{ transform: 'skewY(1.5deg)' }}>
