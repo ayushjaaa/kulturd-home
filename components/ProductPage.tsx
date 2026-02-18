@@ -36,7 +36,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onAddToCart }) => {
         </p>
 
         <div className="text-3xl font-bold mb-10">
-          ${product.price.toFixed(2)}
+          ₹{product.price}
         </div>
 
         <div className="mb-8">

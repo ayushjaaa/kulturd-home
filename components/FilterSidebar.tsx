@@ -57,11 +57,20 @@ export const FilterSidebar: React.FC = () => {
         <FilterCategory
           title="Flavor"
           isOpenDefault={true}
-          options={['Original', 'Citrus', 'Berry', 'Tropical']}
+          options={['Ginger Lemongrass', 'Coffee & Orange', 'Mango Coconut', 'Apple Cinnamon', 'Elderflower Muskmelon', 'Zero Added Sugar']}
         />
-        <FilterCategory title="Size" />
-        <FilterCategory title="Packaging" />
-        <FilterCategory title="Benefit" />
+        <FilterCategory
+          title="Size"
+          options={['6-Pack', '12-Pack', '24-Pack']}
+        />
+        <FilterCategory
+          title="Packaging"
+          options={['Glass Bottle', 'Eco Pack']}
+        />
+        <FilterCategory
+          title="Benefit"
+          options={['Probiotic', 'Zero Sugar', 'Low Calorie', 'Natural Ingredients']}
+        />
       </div>
     </aside>
   );

@@ -16,7 +16,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cart, subtotal, onBack }) =
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           Back to Store
         </button>
-        <h1 className="text-4xl font-bold tracking-tight">BOT<br/>SUFFERS</h1>
+        <h1 className="text-4xl font-bold tracking-tight">CHECK<br/>OUT</h1>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-16">
@@ -61,13 +61,25 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cart, subtotal, onBack }) =
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-widest mb-2 opacity-60">State</label>
                   <select className="w-full bg-transparent border-b border-black py-2 focus:outline-none">
-                    <option value="CA">California</option>
-                    <option value="NY">New York</option>
+                    <option value="">Select State</option>
+                    <option value="DL">Delhi</option>
+                    <option value="MH">Maharashtra</option>
+                    <option value="KA">Karnataka</option>
+                    <option value="TN">Tamil Nadu</option>
+                    <option value="GJ">Gujarat</option>
+                    <option value="RJ">Rajasthan</option>
+                    <option value="UP">Uttar Pradesh</option>
+                    <option value="WB">West Bengal</option>
+                    <option value="TS">Telangana</option>
+                    <option value="KL">Kerala</option>
+                    <option value="PB">Punjab</option>
+                    <option value="HR">Haryana</option>
+                    <option value="GA">Goa</option>
                   </select>
                 </div>
               </div>
               <div className="w-1/2">
-                <label className="block text-[10px] font-bold uppercase tracking-widest mb-2 opacity-60">ZIP Code</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest mb-2 opacity-60">PIN Code</label>
                 <input type="text" className="w-full bg-transparent border-b border-black py-2 focus:outline-none" />
               </div>
             </div>
@@ -96,15 +108,15 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cart, subtotal, onBack }) =
             <div className="space-y-6 mb-8">
               {cart.map(item => (
                 <div key={item.id} className="flex gap-4">
-                  <div className="w-16 h-16 bg-[#DCC7A1]/20 flex items-center justify-center rounded">
-                    <div className="w-6 h-10 bg-[#E5D2B4] rounded-sm border border-gray-300"></div>
+                  <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: item.product.bgColor || '#DCC7A1' }}>
+                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-contain p-1" />
                   </div>
                   <div className="flex-1 flex justify-between items-start">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-tight">{item.product.name}, {item.size}</h4>
                       <p className="text-[10px] opacity-60 uppercase mt-1">QTY: {item.quantity}</p>
                     </div>
-                    <span className="font-bold text-sm">${(item.product.price * item.quantity).toFixed(2)}</span>
+                    <span className="font-bold text-sm">₹{item.product.price * item.quantity}</span>
                   </div>
                 </div>
               ))}
@@ -113,7 +125,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cart, subtotal, onBack }) =
             <div className="space-y-3 pt-6 border-t border-gray-200">
               <div className="flex justify-between text-sm">
                 <span className="opacity-70">Subtotal:</span>
-                <span className="font-bold">${subtotal.toFixed(2)}</span>
+                <span className="font-bold">₹{subtotal}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="opacity-70">Shipping:</span>
@@ -121,13 +133,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cart, subtotal, onBack }) =
               </div>
               <div className="flex justify-between text-sm">
                 <span className="opacity-70">Tax:</span>
-                <span className="font-bold">$0.00</span>
+                <span className="font-bold">₹0</span>
               </div>
             </div>
 
             <div className="flex justify-between items-center text-lg font-bold pt-8 mt-4 border-t-2 border-black">
               <span>Total:</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>₹{subtotal}</span>
             </div>
 
             <button 

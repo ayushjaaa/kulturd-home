@@ -46,12 +46,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
           ) : (
             cart.map((item) => (
               <div key={item.id} className="flex gap-4">
-                <div className="w-24 h-24 bg-[#DCC7A1]/20 flex items-center justify-center rounded">
-                  <div className="w-8 h-12 bg-[#E5D2B4] rounded-sm border border-gray-300 flex flex-col items-center pt-2">
-                    <div className="w-4 h-4 border border-black rounded-full flex items-center justify-center scale-[0.3]">
-                        <div className="w-2 h-2 bg-black rounded-full"></div>
-                    </div>
-                  </div>
+                <div className="w-24 h-24 rounded overflow-hidden flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: item.product.bgColor || '#DCC7A1' }}>
+                  <img src={item.product.image} alt={item.product.name} className="w-full h-full object-contain p-2" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -59,7 +55,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                     <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">PACK SIZE: {item.size}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-lg">${(item.product.price).toFixed(2)}</span>
+                    <span className="font-bold text-lg">₹{item.product.price}</span>
                     <div className="flex items-center border border-black rounded px-1">
                       <button onClick={() => onUpdateQuantity(item.id, -1)} className="p-2 hover:bg-black/5"><Minus size={14}/></button>
                       <span className="px-3 text-sm font-medium">{item.quantity}</span>
@@ -75,7 +71,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
         <div className="p-6 border-t border-gray-200 space-y-4">
           <div className="flex justify-between items-center text-sm font-bold tracking-widest">
             <span>SUBTOTAL</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>₹{subtotal}</span>
           </div>
           <button 
             disabled={cart.length === 0}

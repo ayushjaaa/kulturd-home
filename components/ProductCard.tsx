@@ -26,17 +26,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
           alt={product.name}
           className="max-h-full max-w-full object-contain transform transition-transform duration-500 group-hover:scale-110"
         />
+      </div>
 
-        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end text-forest pointer-events-none">
-          <div className="max-w-[75%]">
-            <h3 className="text-[11px] font-bold uppercase leading-tight tracking-wider">
-              {product.name}
-            </h3>
-          </div>
-          <span className="text-[11px] font-bold">
-            ₹{product.price}
-          </span>
-        </div>
+      <div className="px-4 py-3 flex justify-between items-center bg-white">
+        <h3 className="text-[11px] font-bold uppercase leading-tight tracking-wider text-forest">
+          {product.name}
+        </h3>
+        <span className="text-[11px] font-bold text-forest">₹{product.price}</span>
       </div>
     </div>
   );
