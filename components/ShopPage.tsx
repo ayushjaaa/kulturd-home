@@ -3,24 +3,21 @@ import React, { useState } from 'react';
 import { FilterSidebar } from './FilterSidebar';
 import { ProductSection } from './ProductSection';
 import ProductPage from './ProductPage';
-import { Product, CartItem, PackSize } from '../types';
+import { Product, PackSize } from '../types';
 
 const BESTSELLERS: Product[] = [
-  { id: '1', name: 'Original Ginger Lemon', price: 299, image: '/bottle.png', bgColor: '#d4e9d7', tag: 'Best Seller' },
-  { id: '2', name: 'Wild Berry Burst',       price: 329, image: '/bottle.png', bgColor: '#e8d4d4', tag: 'New' },
-  { id: '3', name: 'Tropical Mango',         price: 319, image: '/bottle.png', bgColor: '#fde9c4', tag: 'Popular' },
-  { id: '4', name: 'Citrus Sunrise',         price: 309, image: '/bottle.png', bgColor: '#fdf4c4', tag: 'Limited' },
+  { id: '1', name: 'Ginger Lemongrass',  price: 299, image: 'https://kulturd.co/wp-content/uploads/2023/06/Ginger-Lemongrass-Kombucha-1.png',   bgColor: '#d4e9d7', tag: 'Best Seller' },
+  { id: '2', name: 'Coffee & Orange',    price: 329, image: 'https://kulturd.co/wp-content/uploads/2022/03/Coffee-Orange-Kombucha-1.png',        bgColor: '#e8d4d4', tag: 'Fan Favourite' },
+  { id: '3', name: 'Mango Coconut',      price: 319, image: 'https://kulturd.co/wp-content/uploads/2025/09/mango-coconut-lifestyle.png',         bgColor: '#fde9c4', tag: 'Popular' },
+  { id: '4', name: 'Variety Pack',       price: 999, image: 'https://kulturd.co/wp-content/uploads/2023/08/Variety-Pack.png',                    bgColor: '#fdf4c4', tag: 'Best Value' },
 ];
 
 const ALL_FLAVORS: Product[] = [
-  { id: '5', name: 'Green Tea Mint',         price: 299, image: '/bottle.png', bgColor: '#d4ede8', tag: 'Classic' },
-  { id: '6', name: 'Hibiscus Rose',          price: 339, image: '/bottle.png', bgColor: '#f4d4e8', tag: 'New' },
-  { id: '7', name: 'Passion Fruit',          price: 329, image: '/bottle.png', bgColor: '#fde0c4', tag: 'Seasonal' },
-  { id: '8', name: 'Apple Cinnamon',         price: 319, image: '/bottle.png', bgColor: '#ede8d4', tag: 'Popular' },
-  { id: '9', name: 'Blueberry Lavender',     price: 349, image: '/bottle.png', bgColor: '#ddd4ed', tag: 'Limited' },
-  { id: '10', name: 'Turmeric Ginger',       price: 309, image: '/bottle.png', bgColor: '#f5edc4', tag: 'Wellness' },
-  { id: '11', name: 'Peach Oolong',          price: 329, image: '/bottle.png', bgColor: '#f5ddd4', tag: 'New' },
-  { id: '12', name: 'Pomegranate Acai',      price: 339, image: '/bottle.png', bgColor: '#ead4e9', tag: 'Antioxidant' },
+  { id: '5', name: 'Apple Cinnamon',         price: 299, image: 'https://kulturd.co/wp-content/uploads/2022/03/Apple-Cinnamon-Kombucha.png',     bgColor: '#ede8d4', tag: 'Classic' },
+  { id: '6', name: 'Elderflower Muskmelon',  price: 339, image: 'https://kulturd.co/wp-content/uploads/2023/06/Elderflower-Muskmelon-1.png',     bgColor: '#f4d4e8', tag: 'New' },
+  { id: '7', name: 'Zero Added Sugar',       price: 329, image: 'https://kulturd.co/wp-content/uploads/2023/06/Zero-Added-Sugar-Kombucha.png',   bgColor: '#d4ede8', tag: 'Wellness' },
+  { id: '8', name: 'Original Kombucha',      price: 319, image: 'https://kulturd.co/wp-content/uploads/2022/03/4a.jpg',                          bgColor: '#fde0c4', tag: 'Classic' },
+  { id: '9', name: 'Variety Pack (12)',       price: 1299, image: 'https://kulturd.co/wp-content/uploads/2021/03/New-variety-pack_02.png',        bgColor: '#ddd4ed', tag: 'Best Value' },
 ];
 
 interface ShopPageProps {
