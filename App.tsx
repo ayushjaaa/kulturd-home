@@ -1,17 +1,26 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import { ThreeDBottleShowcase } from './components/ThreeDBottleShowcase';
 import { ScrollingBanner } from './components/ScrollingBanner';
-import { FlavorSection } from './components/FlavorSection';
-import { SocialProof } from './components/SocialProof';
-import { Footer } from './components/Footer';
 import Marquee from './components/Marquee';
 import { ShopPage } from './components/ShopPage';
 import CartDrawer from './components/CartDrawer';
 import CheckoutPage from './components/CheckoutPage';
 import { CartItem, Product, PackSize } from './types';
+
+const ThreeDBottleShowcase = React.lazy(() =>
+  import('./components/ThreeDBottleShowcase').then(m => ({ default: m.ThreeDBottleShowcase }))
+);
+const FlavorSection = React.lazy(() =>
+  import('./components/FlavorSection').then(m => ({ default: m.FlavorSection }))
+);
+const SocialProof = React.lazy(() =>
+  import('./components/SocialProof').then(m => ({ default: m.SocialProof }))
+);
+const Footer = React.lazy(() =>
+  import('./components/Footer').then(m => ({ default: m.Footer }))
+);
 
 const ShimmerLoader: React.FC<{ visible: boolean }> = ({ visible }) => (
   <div
@@ -27,7 +36,7 @@ const ShimmerLoader: React.FC<{ visible: boolean }> = ({ visible }) => (
       padding: 'clamp(24px, 4vw, 56px) clamp(16px, 6vw, 80px)',
       pointerEvents: visible ? 'all' : 'none',
       opacity: visible ? 1 : 0,
-      transition: 'opacity 0.6s ease',
+      transition: 'opacity 0.3s ease',
       overflow: 'hidden',
     }}
   >
@@ -175,10 +184,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const done = () => setLoading(false);
     if (document.readyState === 'complete') {
-      const t = setTimeout(done, 800);
-      return () => clearTimeout(t);
+      done();
+      return;
     }
-    window.addEventListener('load', () => setTimeout(done, 800), { once: true });
+    window.addEventListener('load', done, { once: true });
+    return () => window.removeEventListener('load', done);
   }, []);
 
   const handleAddToCart = (product: Product, size: PackSize) => {
@@ -242,20 +252,28 @@ const App: React.FC = () => {
       <Marquee />
       <main>
         <section id="bottle-showcase">
-          <ThreeDBottleShowcase />
+          <Suspense fallback={null}>
+            <ThreeDBottleShowcase />
+          </Suspense>
         </section>
         <section id="scrolling-banner">
           <ScrollingBanner />
         </section>
         <section id="flavors">
-          <FlavorSection onAddToCart={() => setShowShop(true)} />
+          <Suspense fallback={null}>
+            <FlavorSection onAddToCart={() => setShowShop(true)} />
+          </Suspense>
         </section>
         <section id="social-proof">
-          <SocialProof />
+          <Suspense fallback={null}>
+            <SocialProof />
+          </Suspense>
         </section>
       </main>
       <section id="footer">
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </section>
     </div>
   );
