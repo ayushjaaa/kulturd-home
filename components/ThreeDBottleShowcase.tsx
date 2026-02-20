@@ -6,10 +6,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const IMAGES = [
-  'https://kulturd.co/wp-content/uploads/2025/09/mango-coconut-lifestyle.png',
-  'https://kulturd.co/wp-content/uploads/2021/03/New-variety-pack_02.png',
-  'https://kulturd.co/wp-content/uploads/2022/03/4a.jpg',
-  'https://kulturd.co/wp-content/uploads/2022/03/Apple-Cinnamon-Kombucha.png',
+  '/images/mango-coconut-lifestyle.png',
+  '/images/New-variety-pack_02.png',
+  '/images/4a.jpg',
+  '/images/Apple-Cinnamon-Kombucha.png',
 ];
 
 // Color stops for each image (liquid fill color)
