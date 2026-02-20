@@ -8,6 +8,8 @@ import * as THREE from 'three';
 const mouse = { x: 0, y: 0 };
 let lastMouseTime = 0;
 
+useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+
 const Bottle: React.FC = () => {
   const ref = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/textured_model_0.glb');
