@@ -182,13 +182,17 @@ const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
+    // Hide shimmer once fonts + critical above-fold assets are ready,
+    // not waiting for lazy sections (3D showcase, flavors, footer, etc.)
     const done = () => setLoading(false);
-    if (document.readyState === 'complete') {
-      done();
+    if (document.readyState !== 'loading') {
+      // DOM already parsed — just wait for fonts
+      document.fonts.ready.then(done);
       return;
     }
-    window.addEventListener('load', done, { once: true });
-    return () => window.removeEventListener('load', done);
+    const onDomReady = () => document.fonts.ready.then(done);
+    document.addEventListener('DOMContentLoaded', onDomReady, { once: true });
+    return () => document.removeEventListener('DOMContentLoaded', onDomReady);
   }, []);
 
   const handleAddToCart = (product: Product, size: PackSize) => {
